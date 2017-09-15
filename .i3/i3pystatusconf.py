@@ -23,16 +23,23 @@ status.register("battery",
 
 # Note: the network module requires PyPI package netifaces
 status.register("network",
-    interface="eno1",
-    format_up="{v4cidr}",)
+    interface="enp0s31f6",
+    format_up="enp0s31f6 {v4cidr}",)
 
 # Note: requires both netifaces and basiciw
 status.register("network",
     interface="wlp2s0",
-    format_up="{essid} {quality:3.0f}%",)
+    format_up="{essid} {quality:3.0f}% ({v4cidr})",)
 
 # Shows alsa default sink volume
-status.register("alsa",
-    format="♪{volume}",)
+status.register("pulseaudio")
+
+# GPU temp
+status.register("gpu_temp",
+        format="GPU {temp} °C",)
+
+# CPU temp
+status.register("temp",
+                format="CPU {temp} °C",)
 
 status.run()

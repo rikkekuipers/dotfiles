@@ -22,19 +22,23 @@
 
   set $workspace1 "1: "
   set $workspace2 "2: "
-  set $workspace3 "3: "
-  set $workspace4 "4: "
-  set $workspace5 "5: "
-  set $workspace6 "6: "
-  set $workspace7 "7: "
-  set $workspace8 "8: "
-  set $workspace9 "9: "
-  set $workspace10 "10: "
+  set $workspace3 "3"
+  set $workspace4 "4"
+  set $workspace5 "5"
+  set $workspace6 "6"
+  set $workspace7 "7"
+  set $workspace8 "8"
+  set $workspace9 "9"
+  set $workspace10 "10"
 
 # General Configuration
   font pango:DejaVu Sans Mono 8
   floating_modifier $mod
   hide_edge_borders both
+
+# Workspace related
+  bindsym $mod+Tab workspace next
+  bindsym $mod+Shift+Tab workspace prev
 
 # Window-Related Bindings
   bindsym $mod+Left focus left
@@ -68,19 +72,26 @@
 # Program-Related Bindings
   bindsym $mod+Return exec terminator
   bindsym $mod+d exec --no-startup-id j4-dmenu-desktop --dmenu="dmenu -i" --term="i3-sensible-nerminal"
-  bindsym $mod+Tab exec --no-startup-id sh /home/p0c/scripts/display.sh, mode "default"
+  bindsym $mod+space exec --no-startup-id sh /home/p0c/scripts/display.sh, mode "default"
 
 # Volume & Media Bindings
-  bindsym XF86AudioLowerVolume exec --no-startup-id pulseaudio-ctl down
-  bindsym XF86AudioRaiseVolume exec --no-startup-id pulseaudio-ctl up
-  bindsym XF86AudioMute exec --no-startup-id pulseaudio-ctl mute
+#  bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q set Master 2dB- unmute
+#  bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q set Master 2dB+ unmute
+#  bindsym XF86AudioMute exec --no-startup-id amixer -q set Master toggle
   bindsym XF86AudioPlay exec playerctl play-pause
   bindsym XF86AudioPause exec playerctl pause
   bindsym XF86AudioNext exec playerctl next
   bindsym XF86AudioPrev exec playerctl previous
+  bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
+  bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
+
+# Pulse Audio controls
+  bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
+  bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
+  bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
 # Startup Programs
-  exec --no-startup-id google-chrome-stable
+  exec --no-startup-id chromium
   exec --no-startup-id terminator
   exec_always --no-startup-id feh --bg-scale /home/p0c/pictures/wallpapers/wolf.jpeg
 
@@ -119,7 +130,7 @@
 
 # Program Workspaces
   assign [class="Terminator"] $workspace1
-  assign [class="google-chrome"] $workspace2
+  assign [class="Chromium"] $workspace2
 
 # Floating
 for_window [window_role="pop-up"] floating enable
@@ -149,3 +160,6 @@ for_window [window_role="pop-up"] floating enable
       urgent_workspace   $base01 $base01    $base08
     }
   }
+
+# Misc
+focus_on_window_activation focus
